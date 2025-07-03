@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>企业官网 - SPA模式</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body class="bg-gray-50">
+  <div id="app" class="min-h-screen flex flex-col">
+    <!-- 导航栏 (保持不变) -->
+    <nav class="bg-white shadow-lg">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <div class="text-2xl font-bold text-blue-600">企业LOGO</div>
+          <div class="hidden md:flex space-x-8">
+            <a @click="currentView = 'home'" class="cursor-pointer hover:text-blue-600">首页</a>
+            <a @click="currentView = 'home'; scrollTo('#products')" class="cursor-pointer hover:text-blue-600">产品</a>
+            <a @click="currentView = 'home'; scrollTo('#contact')" class="cursor-pointer hover:text-blue-600">联系我们</a>
+          </div>
+          <button class="md:hidden">☰</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 路由内容 -->
+    <main class="flex-grow">
+      <!-- 首页 -->
+      <div v-if="currentView === 'home'">
+        <!-- 英雄区域 -->
+        <header class="bg-blue-700 text-white py-20">
+          <div class="max-w-4xl mx-auto text-center px-4">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">为您提供专业解决方案</h1>
+            <p class="text-xl opacity-90">领先行业的技术与服务，助力企业数字化转型</p>
+          </div>
+        </header>
+
+        <!-- 产品展示 -->
+        <section id="products" class="py-16 max-w-6xl mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">我们的产品</h2>
+          <div class="grid md:grid-cols-3 gap-8">
+            <!-- 动态渲染产品卡片 -->
+            <div 
+              v-for="product in products" 
+              :key="product.id"
+              @click="currentView = 'product-' + product.id"
+              class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02]">
+              <div class="bg-blue-100 h-40 rounded-md mb-4 flex items-center justify-center">
+                <span class="text-5xl">{{ product.icon }}</span>
+              </div>
+              <h3 class="text-xl font-semibold mb-2">{{ product.title }}</h3>
+              <p class="text-gray-600">点击查看详情</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 联系表单 (保持不变) -->
+        <section id="contact" class="bg-gray-100 py-16">
+          <!-- ...原有联系表单代码... -->
+        </section>
+      </div>
+
+      <!-- 产品详情页 -->
+      <div v-else-if="currentView.startsWith('product-')" class="py-16 max-w-4xl mx-auto px-4">
+        <button 
+          @click="currentView = 'home'"
+          class="mb-8 flex items-center text-blue-600 hover:text-blue-800 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+          返回产品列表
+        </button>
+
+        <!-- 动态渲染详情内容 -->
+        <div v-if="currentProduct" class="bg-white p-8 rounded-lg shadow-md">
+          <div class="flex flex-col md:flex-row gap-8">
+            <div class="bg-blue-100 w-full md:w-1/3 h-64 rounded-lg flex items-center justify-center">
+              <span class="text-8xl">{{ currentProduct.icon }}</span>
+            </div>
+            <div class="flex-grow">
+              <h1 class="text-3xl font-bold mb-4">{{ currentProduct.title }}</h1>
+              <div class="prose max-w-none">
+                <p class="text-gray-700 mb-4">{{ currentProduct.description }}</p>
+                <ul class="list-disc pl-5 space-y-2">
+                  <li v-for="(feature, index) in currentProduct.features" :key="index">
+                    {{ feature }}
+                  </li>
+                </ul>
+                <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                  <h3 class="font-semibold text-blue-800 mb-2">技术参数</h3>
+                  <table class="min-w-full">
+                    <tr v-for="(spec, key) in currentProduct.specs" :key="key">
+                      <td class="py-2 pr-4 font-medium">{{ key }}:</td>
+                      <td class="py-2">{{ spec }}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+      <!-- 联系表单 -->
+  <section id="contact" class="bg-gray-100 py-16" v-if="currentView === 'home'">
+    <div class="max-w-4xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-8">联系我们</h2>
+      <form class="bg-white p-8 rounded-lg shadow-md">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-gray-700 mb-2">姓名</label>
+            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-gray-700 mb-2">邮箱</label>
+            <input type="email" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
+          </div>
+        </div>
+        <div class="mt-6">
+          <label class="block text-gray-700 mb-2">留言</label>
+          <textarea rows="4" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+        <button type="submit" class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition w-full md:w-auto">
+          提交咨询
+        </button>
+      </form>
+    </div>
+  </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-white py-8">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <p>© 2023 企业名称. 保留所有权利</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const { createApp, ref, computed } = Vue;
+
+    createApp({
+      setup() {
+        // 当前视图状态
+        const currentView = ref('home');
+        
+        // 产品数据
+        const products = ref([
+          {
+            id: 1,
+            title: "数据分析平台",
+            icon: "📊",
+            description: "帮助企业快速洞察数据价值，实现智能决策",
+            features: [
+              "实时数据可视化",
+              "多维度分析报告",
+              "预测性分析引擎",
+              "API集成支持"
+            ],
+            specs: {
+              "版本": "v3.2.1",
+              "数据容量": "无上限",
+              "响应时间": "<500ms",
+              "安全认证": "ISO 27001"
+            }
+          },
+          {
+            id: 2,
+            title: "AI 自动化",
+            icon: "🤖",
+            description: "基于人工智能的流程自动化解决方案",
+            features: [
+              "智能文档处理",
+              "RPA流程自动化",
+              "自然语言交互",
+              "机器学习模型集成"
+            ],
+            specs: {
+              "版本": "v2.0",
+              "支持语言": "中文/英文",
+              "准确率": "98.7%",
+              "部署方式": "云/本地"
+            }
+          },
+          {
+            id: 3,
+            title: "云服务",
+            icon: "☁️",
+            description: "安全可靠的云计算基础设施",
+            features: [
+              "99.99%可用性",
+              "全球数据中心",
+              "弹性伸缩",
+              "混合云支持"
+            ],
+            specs: {
+              "存储类型": "SSD/HDD",
+              "网络带宽": "1-10Gbps",
+              "备份策略": "每日增量+每周全量",
+              "合规性": "GDPR/HIPAA"
+            }
+          }
+        ]);
+
+        // 计算当前显示的产品
+        const currentProduct = computed(() => {
+          if (!currentView.value.startsWith('product-')) return null;
+          const productId = parseInt(currentView.value.split('-')[1]);
+          return products.value.find(p => p.id === productId);
+        });
+
+        // 滚动到指定位置
+        const scrollTo = (selector) => {
+          setTimeout(() => {
+            const el = document.querySelector(selector);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 50);
+        };
+
+        return { 
+          currentView, 
+          products, 
+          currentProduct,
+          scrollTo
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
