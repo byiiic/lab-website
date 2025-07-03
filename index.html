@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>企业官网 - SPA模式</title>
+  <title>Whole-Cell Modeling Lab</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
@@ -13,11 +13,12 @@
     <nav class="bg-white shadow-lg">
       <div class="max-w-6xl mx-auto px-4">
         <div class="flex justify-between items-center py-4">
-          <div class="text-2xl font-bold text-blue-600">企业LOGO</div>
+          <div class="text-2xl font-bold text-purple-600">Whole-Cell Modeling Lab</div>
           <div class="hidden md:flex space-x-8">
-            <a @click="currentView = 'home'" class="cursor-pointer hover:text-blue-600">首页</a>
-            <a @click="currentView = 'home'; scrollTo('#products')" class="cursor-pointer hover:text-blue-600">产品</a>
-            <a @click="currentView = 'home'; scrollTo('#contact')" class="cursor-pointer hover:text-blue-600">联系我们</a>
+            <a @click="currentView = 'home'" class="cursor-pointer hover:text-purple-600">Home</a>
+            <a @click="currentView = 'home'; scrollTo('#products')" class="cursor-pointer hover:text-purple-600">Features</a>
+            <a @click="currentView = 'home'; scrollTo('#tutorials')" class="cursor-pointer hover:text-purple-600">News</a>
+            <a @click="currentView = 'home'; scrollTo('#contact')" class="cursor-pointer hover:text-purple-600">Contact</a>
           </div>
           <button class="md:hidden">☰</button>
         </div>
@@ -29,110 +30,139 @@
       <!-- 首页 -->
       <div v-if="currentView === 'home'">
         <!-- 英雄区域 -->
-        <header class="bg-blue-700 text-white py-20">
+        <header class="bg-gradient-to-b from-purple-800 to-purple-400 text-white py-20">
           <div class="max-w-4xl mx-auto text-center px-4">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">为您提供专业解决方案</h1>
-            <p class="text-xl opacity-90">领先行业的技术与服务，助力企业数字化转型</p>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Graph-based Whole-Cell Modeling</h1>
+            <p class="text-xl opacity-90">GraphMM integrates diverse biological models across space, time, and structure using probabilistic representations. Inspired by projects like autoPACK, it bridges scales from molecules to islets.</p>
           </div>
         </header>
 
-        <!-- 产品展示 -->
+        <!-- Features -->
         <section id="products" class="py-16 max-w-6xl mx-auto px-4">
-          <h2 class="text-3xl font-bold text-center mb-12">我们的产品</h2>
+          <h2 class="text-3xl font-bold text-center mb-12">Key Components</h2>
           <div class="grid md:grid-cols-3 gap-8">
-            <!-- 动态渲染产品卡片 -->
             <div 
               v-for="product in products" 
               :key="product.id"
               @click="currentView = 'product-' + product.id"
-              class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02]">
-              <div class="bg-blue-100 h-40 rounded-md mb-4 flex items-center justify-center">
-                <span class="text-5xl">{{ product.icon }}</span>
+              class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col"
+              style="height: 400px;">
+              <div class="bg-purple-100 h-80 rounded-md mb-4 flex items-center justify-center">
+                <img 
+                v-if="product.image" 
+                :src="product.image" 
+                :alt="product.title"
+                class="w-full h-full object-cover"
+                >
+                <span v-else class="text-5xl">{{ product.icon }}</span>
               </div>
               <h3 class="text-xl font-semibold mb-2">{{ product.title }}</h3>
-              <p class="text-gray-600">点击查看详情</p>
+              <p class="text-gray-600 mt-auto">Click to view details > </p>
             </div>
           </div>
         </section>
 
-        <!-- 联系表单 (保持不变) -->
-        <section id="contact" class="bg-gray-100 py-16">
-          <!-- ...原有联系表单代码... -->
+        <!-- tutorials -->
+        <section id="tutorials" class="py-16 max-w-6xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-12">News & Tutorials</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div 
+            v-for="tutorial in tutorials" 
+            :key="tutorial.id"
+            @click="currentView = 'tutorial-' + tutorial.id"
+            class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col"
+            style="height: 400px;">
+            <div class="bg-purple-100 h-40 rounded-md mb-4 flex items-center justify-center">
+                <span class="text-5xl">{{ tutorial.icon }}</span>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">{{ tutorial.title }}</h3>
+            <p class="text-gray-400">{{ tutorial.time }}</p>
+            <p class="text-gray-600 mt-auto">Click to view details > </p> <!-- mt-auto 实现底部固定 -->
+            </div>
+        </div>
         </section>
+
       </div>
 
-      <!-- 产品详情页 -->
+      <!-- Features详情页 -->
       <div v-else-if="currentView.startsWith('product-')" class="py-16 max-w-4xl mx-auto px-4">
         <button 
           @click="currentView = 'home'"
-          class="mb-8 flex items-center text-blue-600 hover:text-blue-800 transition">
+          class="mb-8 flex items-center text-purple-600 hover:text-purple-800 transition">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
           </svg>
-          返回产品列表
+          Back
         </button>
 
-        <!-- 动态渲染详情内容 -->
         <div v-if="currentProduct" class="bg-white p-8 rounded-lg shadow-md">
           <div class="flex flex-col md:flex-row gap-8">
-            <div class="bg-blue-100 w-full md:w-1/3 h-64 rounded-lg flex items-center justify-center">
-              <span class="text-8xl">{{ currentProduct.icon }}</span>
+            <div class="bg-purple-100 w-full md:w-1/2 h-96 rounded-lg overflow-hidden cursor-zoom-in" @click="openModal(currentProduct.image)">
+              <img 
+                v-if="currentProduct.image" 
+                :src="currentProduct.image" 
+                :alt="currentProduct.title"
+                class="w-full h-full object-cover"
+                >
+                <span v-else class="text-8xl">{{ currentProduct.icon }}</span>
             </div>
             <div class="flex-grow">
               <h1 class="text-3xl font-bold mb-4">{{ currentProduct.title }}</h1>
               <div class="prose max-w-none">
                 <p class="text-gray-700 mb-4">{{ currentProduct.description }}</p>
-                <ul class="list-disc pl-5 space-y-2">
-                  <li v-for="(feature, index) in currentProduct.features" :key="index">
-                    {{ feature }}
-                  </li>
-                </ul>
-                <div class="mt-6 p-4 bg-blue-50 rounded-lg">
-                  <h3 class="font-semibold text-blue-800 mb-2">技术参数</h3>
-                  <table class="min-w-full">
-                    <tr v-for="(spec, key) in currentProduct.specs" :key="key">
-                      <td class="py-2 pr-4 font-medium">{{ key }}:</td>
-                      <td class="py-2">{{ spec }}</td>
-                    </tr>
-                  </table>
+              </div>
+            </div>
+
+            <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4" @click.self="closeModal">
+                <div class="relative max-w-6xl max-h-[90vh]">
+                <button @click="closeModal" class="absolute -top-10 right-0 text-white text-2xl">
+                    &times;
+                </button>
+                <img 
+                    :src="modalImage" 
+                    class="max-w-full max-h-[90vh] object-contain"
+                >
                 </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- News详情页 -->
+      <div v-else-if="currentView.startsWith('tutorial-')" class="py-16 max-w-4xl mx-auto px-4">
+        <button 
+          @click="currentView = 'home'"
+          class="mb-8 flex items-center text-purple-600 hover:text-purple-800 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+          Back
+        </button>
+
+        <div v-if="currentTutorial" class="bg-white p-8 rounded-lg shadow-md">
+          <div class="flex flex-col md:flex-row gap-8">
+            <div class="bg-purple-100 w-full md:w-1/3 h-64 rounded-lg flex items-center justify-center">
+              <span class="text-8xl">{{ currentTutorial.icon }}</span>
+            </div>
+            <div class="flex-grow">
+              <h1 class="text-3xl font-bold mb-4">{{ currentTutorial.title }}</h1>
+              <div class="prose max-w-none">
+                <p class="text-gray-700 mb-4">{{ currentTutorial.description }}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </main>
+    
 
-      <!-- 联系表单 -->
-  <section id="contact" class="bg-gray-100 py-16" v-if="currentView === 'home'">
-    <div class="max-w-4xl mx-auto px-4">
-      <h2 class="text-3xl font-bold text-center mb-8">联系我们</h2>
-      <form class="bg-white p-8 rounded-lg shadow-md">
-        <div class="grid md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-gray-700 mb-2">姓名</label>
-            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-          </div>
-          <div>
-            <label class="block text-gray-700 mb-2">邮箱</label>
-            <input type="email" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500">
-          </div>
-        </div>
-        <div class="mt-6">
-          <label class="block text-gray-700 mb-2">留言</label>
-          <textarea rows="4" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
-        </div>
-        <button type="submit" class="mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition w-full md:w-auto">
-          提交咨询
-        </button>
-      </form>
-    </div>
-  </section>
-
+      
     <!-- 页脚 -->
-    <footer class="bg-gray-800 text-white py-8">
+    <footer id="contact" class="bg-gray-800 text-white py-8">
       <div class="max-w-6xl mx-auto px-4 text-center">
-        <p>© 2023 企业名称. 保留所有权利</p>
+        <p>©  2025 Whole-Cell Modeling Lab · Department of Bioengineering</p>
+        <p> Email: <a href="mailto:cellmod@university.edu" class="text-blue-600 underline">cellmod@university.edu</a></p>
       </div>
     </footer>
   </div>
@@ -145,13 +175,13 @@
         // 当前视图状态
         const currentView = ref('home');
         
-        // 产品数据
+        // Features data
         const products = ref([
           {
             id: 1,
-            title: "数据分析平台",
+            title: "autoPACK",
             icon: "📊",
-            description: "帮助企业快速洞察数据价值，实现智能决策",
+            description: "Packing of complex spatial models (proteins, vesicles) into cellular geometry with no overlaps.",
             features: [
               "实时数据可视化",
               "多维度分析报告",
@@ -167,9 +197,10 @@
           },
           {
             id: 2,
-            title: "AI 自动化",
+            title: "GraphMM",
             icon: "🤖",
-            description: "基于人工智能的流程自动化解决方案",
+            description: "Probabilistic metamodeling framework for multi-scale integration and inference.",
+            image: "img/GraphMM-method.png",
             features: [
               "智能文档处理",
               "RPA流程自动化",
@@ -185,9 +216,9 @@
           },
           {
             id: 3,
-            title: "云服务",
+            title: "cellVIEW",
             icon: "☁️",
-            description: "安全可靠的云计算基础设施",
+            description: "Interactive 3D visualization of mesoscale models using Unity/WebGL engines.",
             features: [
               "99.99%可用性",
               "全球数据中心",
@@ -203,6 +234,9 @@
           }
         ]);
 
+        const showModal = ref(false);
+        const modalImage = ref('');
+
         // 计算当前显示的产品
         const currentProduct = computed(() => {
           if (!currentView.value.startsWith('product-')) return null;
@@ -210,22 +244,91 @@
           return products.value.find(p => p.id === productId);
         });
 
+        // tutorials data
+        const tutorials = ref([
+          {
+            id: 1,
+            title: "tutorial Paper on β-cell Modeling",
+            icon: "📊",
+            description: "GraphMM reveals how Ca²⁺ channel variations impact Type 2 diabetes onset.",
+            time: "Published: May 2025"
+          },
+          {
+            id: 2,
+            title: "3D Packing with autoPACK",
+            icon: "🤖",
+            description: "Tutorial on how to model mitochondria and organelles using Blender + autoPACK.",
+            time: "Updated: Mar 2025"
+          },
+          {
+            id: 3,
+            title: "Multi-scale Workshop",
+            icon: "☁️",
+            description: "Join our hands-on workshop on whole-cell simulation at NBCR Summer School.",
+            time: "Upcoming: July 2025"
+          }
+        ]);
+
+        // tutorial
+        const currentTutorial = computed(() => {
+          if (!currentView.value.startsWith('tutorial-')) return null;
+          const tutorialId = parseInt(currentView.value.split('-')[1]);
+          return tutorials.value.find(p => p.id === tutorialId);
+        });
+
         // 滚动到指定位置
         const scrollTo = (selector) => {
+            console.log("scroll!")
+
           setTimeout(() => {
             const el = document.querySelector(selector);
             if (el) el.scrollIntoView({ behavior: 'smooth' });
           }, 50);
         };
 
+        const openModal = (imgUrl) => {
+        console.log('方法被调用，参数:', imgUrl);
+        if (!imgUrl) return; 
+        console.log('openModal called with:', imgUrl); 
+        modalImage.value = imgUrl;
+        showModal.value = true;
+        document.body.style.overflow = 'hidden'; // 禁止背景滚动
+        };
+
+        const closeModal = () => {
+        showModal.value = false;
+        document.body.style.overflow = '';
+        };
+
         return { 
           currentView, 
           products, 
+          tutorials,
           currentProduct,
-          scrollTo
+          currentTutorial,
+          scrollTo,
+          openModal,
+          closeModal,
+          showModal,
+          modalImage
         };
-      }
+}
     }).mount('#app');
   </script>
 </body>
 </html>
+
+<!-- <ul class="list-disc pl-5 space-y-2">
+                  <li v-for="(feature, index) in currentProduct.features" :key="index">
+                    {{ feature }}
+                  </li>
+                </ul>
+                <div class="mt-6 p-4 bg-purple-50 rounded-lg">
+                  <h3 class="font-semibold text-purple-800 mb-2">技术参数</h3>
+                  <table class="min-w-full">
+                    <tr v-for="(spec, key) in currentProduct.specs" :key="key">
+                      <td class="py-2 pr-4 font-medium">{{ key }}:</td>
+                      <td class="py-2">{{ spec }}</td>
+                    </tr>
+                  </table>
+                </div> -->
