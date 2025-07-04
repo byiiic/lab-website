@@ -9,20 +9,31 @@
 </head>
 <body class="bg-gray-50">
   <div id="app" class="min-h-screen flex flex-col">
-    <!-- 导航栏 (保持不变) -->
     <nav class="bg-white shadow-lg">
-      <div class="max-w-6xl mx-auto px-4">
-        <div class="flex justify-between items-center py-4">
-          <div class="text-2xl font-bold text-purple-600">Whole-Cell Modeling Lab</div>
-          <div class="hidden md:flex space-x-8">
-            <a @click="currentView = 'home'" class="cursor-pointer hover:text-purple-600">Home</a>
-            <a @click="currentView = 'home'; scrollTo('#products')" class="cursor-pointer hover:text-purple-600">Features</a>
-            <a @click="currentView = 'home'; scrollTo('#tutorials')" class="cursor-pointer hover:text-purple-600">News</a>
-            <a @click="currentView = 'home'; scrollTo('#contact')" class="cursor-pointer hover:text-purple-600">Contact</a>
-          </div>
-          <button class="md:hidden">☰</button>
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+            <div class="text-2xl font-bold text-purple-600">Whole-Cell Modeling Lab</div>
+
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex space-x-8">
+                <a @click="currentView = 'home'" class="cursor-pointer hover:text-purple-600">Home</a>
+                <a @click="currentView = 'home'; scrollTo('#products')" class="cursor-pointer hover:text-purple-600">Features</a>
+                <a @click="currentView = 'home'; scrollTo('#tutorials')" class="cursor-pointer hover:text-purple-600">News</a>
+                <a @click="currentView = 'home'; scrollTo('#contact')" class="cursor-pointer hover:text-purple-600">Contact</a>
+            </div>
+
+            <!-- Mobile button -->
+            <button class="md:hidden text-2xl" @click="isMobileMenuOpen = !isMobileMenuOpen">☰</button>
+            </div>
+
+            <!-- Mobile Nav -->
+            <div v-if="isMobileMenuOpen" class="flex flex-col space-y-4 md:hidden pb-4">
+            <a @click="currentView = 'home'; isMobileMenuOpen = false" class="cursor-pointer hover:text-purple-600">Home</a>
+            <a @click="currentView = 'home'; scrollTo('#products'); isMobileMenuOpen = false" class="cursor-pointer hover:text-purple-600">Features</a>
+            <a @click="currentView = 'home'; scrollTo('#tutorials'); isMobileMenuOpen = false" class="cursor-pointer hover:text-purple-600">News</a>
+            <a @click="currentView = 'home'; scrollTo('#contact'); isMobileMenuOpen = false" class="cursor-pointer hover:text-purple-600">Contact</a>
+            </div>
         </div>
-      </div>
     </nav>
 
     <!-- 路由内容 -->
