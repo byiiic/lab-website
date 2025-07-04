@@ -1,1 +1,1 @@
-# company-website
+# lab-website
