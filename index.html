@@ -47,7 +47,7 @@
               @click="currentView = 'product-' + product.id"
               class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col"
               style="height: 400px;">
-              <div class="bg-purple-100 h-40 rounded-md mb-4 flex items-center justify-center">
+              <div class="bg-purple-100 h-40 rounded-md mb-4 flex items-center justify-center overflow-hidden">
                 <img 
                 v-if="product.image" 
                 :src="product.image" 
