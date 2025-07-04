@@ -197,8 +197,8 @@
 
     createApp({
       setup() {
-        // 当前视图状态
         const currentView = ref('home');
+        const isMobileMenuOpen = ref(false);
         
         // Features data
         const products = ref([
@@ -300,7 +300,8 @@
           openModal,
           closeModal,
           showModal,
-          modalImage
+          modalImage,
+          isMobileMenuOpen,
         };
 }
     }).mount('#app');
