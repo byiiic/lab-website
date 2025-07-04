@@ -42,12 +42,12 @@
           <h2 class="text-3xl font-bold text-center mb-12">Key Components</h2>
           <div class="grid md:grid-cols-3 gap-8">
             <div 
-              v-for="product in products" 
-              :key="product.id"
-              @click="currentView = 'product-' + product.id"
-              class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col"
-              style="height: 400px;">
-              <div class="bg-purple-100 h-40 rounded-md mb-4 flex items-center justify-center overflow-hidden">
+            v-for="product in products" 
+            :key="product.id"
+            @click="currentView = 'product-' + product.id"
+            class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col break-words"
+            >
+            <div class="bg-purple-100 h-40 rounded-md mb-4 flex items-center justify-center overflow-hidden">
                 <img 
                 v-if="product.image" 
                 :src="product.image" 
@@ -55,10 +55,11 @@
                 class="w-full h-full object-cover"
                 >
                 <span v-else class="text-5xl">{{ product.icon }}</span>
-              </div>
-              <h3 class="text-xl font-semibold mb-2">{{ product.title }}</h3>
-              <p class="text-gray-600 mt-auto">Click to view details > </p>
             </div>
+            <h3 class="text-xl font-semibold mb-2 break-words">{{ product.title }}</h3>
+            <p class="text-gray-600 mt-auto break-words pt-4">Click to view details &gt;</p>
+            </div>
+
           </div>
         </section>
 
@@ -70,14 +71,20 @@
             v-for="tutorial in tutorials" 
             :key="tutorial.id"
             @click="currentView = 'tutorial-' + tutorial.id"
-            class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col"
-            style="height: 400px;">
-            <div class="bg-purple-100 h-40 rounded-md mb-4 flex items-center justify-center">
-                <span class="text-5xl">{{ tutorial.icon }}</span>
+            class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col break-words"
+            >
+            <div class="bg-purple-100 h-40 rounded-md mb-4 flex items-center justify-center overflow-hidden">
+                <img 
+                v-if="tutorial.image" 
+                :src="tutorial.image" 
+                :alt="tutorial.title"
+                class="w-full h-full object-cover"
+                >
+                <span v-else class="text-5xl">{{ tutorial.icon }}</span>
             </div>
-            <h3 class="text-xl font-semibold mb-2">{{ tutorial.title }}</h3>
+            <h3 class="text-xl font-semibold mb-2 break-words">{{ tutorial.title }}</h3>
             <p class="text-gray-400">{{ tutorial.time }}</p>
-            <p class="text-gray-600 mt-auto">Click to view details > </p> 
+            <p class="text-gray-600 mt-auto break-words pt-4">Click to view details &gt;</p>
             </div>
         </div>
         </section>
