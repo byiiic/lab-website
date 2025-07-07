@@ -41,43 +41,42 @@
     <main class="flex-grow">
       <!-- Home -->
       <div v-if="currentView === 'home'">
-        <header class="relative bg-gray-900 text-white py-40">
-        <div class="absolute inset-0 bg-[url('img/background.png')] bg-cover bg-center opacity-60"></div>
+        <header class="relative bg-gray-900 text-white pt-28 pb-5 md:py-40">
+        <div class="absolute inset-0 bg-[url('img/background.png')] bg-cover bg-top md:bg-center opacity-60"></div>
 
         <div class="relative max-w-4xl mx-auto text-center px-4">
-            <!-- <h1 class="text-4xl md:text-7xl font-bold mb-4">Graph-based Whole-Cell Modeling</h1> -->
-             <h1 class="text-5xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]" ref="headingRef">
+             <h1 class="text-2xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]" ref="headingRef">
                 <span class="block">Graph-based</span>
                 <span class="block">Whole-Cell Modeling</span>
             </h1>
         </div>
         </header>
 
-        <div class="flex items-center space-x-8 bg-gray-200 shadow-lg pt-6 pl-24 max-h-[400px] overflow-visible relative ">
-            <!-- left text  -->
-            <div class="flex-1 overflow-hidden" ref="subheadingRef">
-                <p class="text-2xl text-gray-600 leading-relaxed" >
+        <div class="flex flex-col md:flex-row items-center md:space-x-8 space-y-6 md:space-y-0 bg-gray-200 shadow-lg pt-6 px-6 md:pl-24 md:px-0 md:overflow-visible relative">
+
+            <!-- left text -->
+            <div class="flex-1" ref="subheadingRef">
+                <p class="text-l text-gray-600 md:leading-relaxed md:text-2xl">
                 GraphMM integrates diverse biological models across space, time, and structure using probabilistic representations. Inspired by projects like autoPACK, it bridges scales from molecules to islets.
                 </p>
             </div>
+
             <!-- right video -->
-            <div class="w-3/5 relative" ref="homeVideoRef">
+            <div class="w-full md:w-3/5 relative" ref="homeVideoRef">
                 <video
-                    ref="videoRef"
-                    class="w-full cursor-pointer"
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                    style="margin-bottom: -90px;"
-                    @click="togglePlay"
+                ref="videoRef"
+                class="w-full rounded-lg md:mb-[-90px] md:rounded-none"
+                autoplay
+                muted
+                loop
+                playsinline
+                @click="togglePlay"
                 >
-                    <source src="video/homepagevideo.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
+                <source src="video/homepagevideo.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
                 </video>
             </div>
         </div>
-
 
         <!-- Features -->
         <section id="products" class="py-16 max-w-6xl mx-auto px-4">
