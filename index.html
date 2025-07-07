@@ -6,10 +6,11 @@
   <title>Whole-Cell Modeling Lab</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body class="bg-gray-50">
   <div id="app" class="min-h-screen flex flex-col">
-    <nav class="bg-white shadow-lg">
+    <nav class="bg-gray-200 shadow-lg fixed top-0 w-full z-50">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
             <div class="text-2xl font-bold text-gray-600">Whole-Cell Modeling Lab</div>
@@ -36,7 +37,7 @@
         </div>
     </nav>
 
-    <!-- 路由内容 -->
+    <!-- router -->
     <main class="flex-grow">
       <!-- Home -->
       <div v-if="currentView === 'home'">
@@ -44,17 +45,43 @@
         <div class="absolute inset-0 bg-[url('img/background.png')] bg-cover bg-center opacity-60"></div>
 
         <div class="relative max-w-4xl mx-auto text-center px-4">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">Graph-based Whole-Cell Modeling</h1>
-            <p class="text-xl opacity-90">
-            GraphMM integrates diverse biological models across space, time, and structure using probabilistic representations.
-            Inspired by projects like autoPACK, it bridges scales from molecules to islets.
-            </p>
+            <!-- <h1 class="text-4xl md:text-7xl font-bold mb-4">Graph-based Whole-Cell Modeling</h1> -->
+             <h1 class="text-5xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]" ref="headingRef">
+                <span class="block">Graph-based</span>
+                <span class="block">Whole-Cell Modeling</span>
+            </h1>
         </div>
         </header>
 
+        <div class="flex items-center space-x-8 bg-gray-200 shadow-lg pt-6 pl-24 max-h-[400px] overflow-visible relative ">
+            <!-- left text  -->
+            <div class="flex-1 overflow-hidden" ref="subheadingRef">
+                <p class="text-2xl text-gray-600 leading-relaxed" >
+                GraphMM integrates diverse biological models across space, time, and structure using probabilistic representations. Inspired by projects like autoPACK, it bridges scales from molecules to islets.
+                </p>
+            </div>
+            <!-- right video -->
+            <div class="w-3/5 relative" ref="homeVideoRef">
+                <video
+                    ref="videoRef"
+                    class="w-full cursor-pointer"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    style="margin-bottom: -90px;"
+                    @click="togglePlay"
+                >
+                    <source src="video/homepagevideo.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+
         <!-- Features -->
         <section id="products" class="py-16 max-w-6xl mx-auto px-4">
-          <h2 class="text-3xl font-bold text-center mb-12">Research</h2>
+          <h2 class="text-3xl font-bold text-left mb-12" ref="resRef">Research</h2>
           <div class="grid md:grid-cols-3 gap-8">
             <div 
             v-for="product in products" 
@@ -80,7 +107,7 @@
 
         <!-- tutorials -->
         <section id="tutorials" class="py-16 max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-center mb-12">News & Tutorials</h2>
+        <h2 class="text-3xl font-bold text-right mb-12" ref="newRef">News & Tutorials</h2>
         <div class="grid md:grid-cols-3 gap-8">
             <div 
             v-for="tutorial in tutorials" 
@@ -196,120 +223,7 @@
     </footer>
   </div>
 
-  <script>
-    const { createApp, ref, computed } = Vue;
-
-    createApp({
-      setup() {
-        const currentView = ref('home');
-        const isMobileMenuOpen = ref(false);
-        
-        // Features data
-        const products = ref([
-          {
-            id: 1,
-            title: "autoPACK",
-            icon: "📊",
-            description: "Packing of complex spatial models (proteins, vesicles) into cellular geometry with no overlaps.",
-          },
-          {
-            id: 2,
-            title: "GraphMM",
-            icon: "🤖",
-            description: "Probabilistic metamodeling framework for multi-scale integration and inference.",
-            image: "img/GraphMM-method.png",
-            ref:"https://github.com/SunLab-SH/GraphMM"
-          },
-          {
-            id: 3,
-            title: "cellVIEW",
-            icon: "☁️",
-            description: "Interactive 3D visualization of mesoscale models using Unity/WebGL engines.",
-          }
-        ]);
-
-        const showModal = ref(false);
-        const modalImage = ref('');
-
-        // calculate current product
-        const currentProduct = computed(() => {
-          if (!currentView.value.startsWith('product-')) return null;
-          const productId = parseInt(currentView.value.split('-')[1]);
-          return products.value.find(p => p.id === productId);
-        });
-
-        // tutorials data
-        const tutorials = ref([
-          {
-            id: 1,
-            title: "tutorial Paper on β-cell Modeling",
-            icon: "📊",
-            description: "GraphMM reveals how Ca²⁺ channel variations impact Type 2 diabetes onset.",
-            time: "Published: May 2025"
-          },
-          {
-            id: 2,
-            title: "3D Packing with autoPACK",
-            icon: "🤖",
-            description: "Tutorial on how to model mitochondria and organelles using Blender + autoPACK.",
-            time: "Updated: Mar 2025"
-          },
-          {
-            id: 3,
-            title: "Multi-scale Workshop",
-            icon: "☁️",
-            description: "Join our hands-on workshop on whole-cell simulation at NBCR Summer School.",
-            time: "Upcoming: July 2025"
-          }
-        ]);
-
-        // tutorial
-        const currentTutorial = computed(() => {
-          if (!currentView.value.startsWith('tutorial-')) return null;
-          const tutorialId = parseInt(currentView.value.split('-')[1]);
-          return tutorials.value.find(p => p.id === tutorialId);
-        });
-
-        // scroll to section
-        const scrollTo = (selector) => {
-            console.log("scroll!")
-
-          setTimeout(() => {
-            const el = document.querySelector(selector);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-          }, 50);
-        };
-
-        const openModal = (imgUrl) => {
-        console.log('方法被调用，参数:', imgUrl);
-        if (!imgUrl) return; 
-        console.log('openModal called with:', imgUrl); 
-        modalImage.value = imgUrl;
-        showModal.value = true;
-        document.body.style.overflow = 'hidden'; // 禁止背景滚动
-        };
-
-        const closeModal = () => {
-        showModal.value = false;
-        document.body.style.overflow = '';
-        };
-
-        return { 
-          currentView, 
-          products, 
-          tutorials,
-          currentProduct,
-          currentTutorial,
-          scrollTo,
-          openModal,
-          closeModal,
-          showModal,
-          modalImage,
-          isMobileMenuOpen,
-        };
-}
-    }).mount('#app');
-  </script>
+  <script src="index.js"></script>
 </body>
 </html>
 
