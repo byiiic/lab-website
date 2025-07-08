@@ -67,7 +67,7 @@
                 <!-- for mobile icon -->
                 <div
                     v-if="showPlayButton"
-                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10 cursor-pointer md:hidden"
+                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10 cursor-pointer rounded-lg md:hidden"
                     @click="playVideo"
                 >
                     <span class="text-white text-6xl">▶</span>
@@ -80,6 +80,7 @@
                 loop
                 playsinline
                 @click="togglePlay"
+                poster="img/homepagevideo.png"
                 >
                 <source 
                     src="video/homepagevideo.mp4" 
