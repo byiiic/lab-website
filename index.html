@@ -13,7 +13,7 @@
     <nav class="bg-gray-200 shadow-lg fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-            <div class="text-2xl font-bold text-gray-600">Whole-Cell Modeling Lab</div>
+            <div class="text-l md:text-2xl font-bold text-gray-600">Whole-Cell Modeling Lab</div>
 
             <!-- Desktop Nav -->
             <div class="hidden md:flex space-x-8">
@@ -41,11 +41,11 @@
     <main class="flex-grow">
       <!-- Home -->
       <div v-if="currentView === 'home'">
-        <header class="relative bg-gray-900 text-white pt-28 pb-5 md:py-40">
+        <header class="relative bg-gray-900 text-white pt-24 pb-5 md:pt-48 md:pb-32">
         <div class="absolute inset-0 bg-[url('img/background.png')] bg-cover bg-top md:bg-center opacity-60"></div>
 
         <div class="relative max-w-4xl mx-auto text-center px-4">
-             <h1 class="text-2xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]" ref="headingRef">
+             <h1 class="text-3xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]" ref="headingRef">
                 <span class="block">Graph-based</span>
                 <span class="block">Whole-Cell Modeling</span>
             </h1>
@@ -72,7 +72,17 @@
                 playsinline
                 @click="togglePlay"
                 >
-                <source src="video/homepagevideo.mp4" type="video/mp4" />
+                <!-- mobile -->
+                <source 
+                    srcset="https://github.com/byiiic/lab-website/releases/download/v1.0/homepagevideo.mp4" 
+                    media="(max-width: 768px)" 
+                    type="video/mp4"
+                >
+                <!-- PC -->
+                <source 
+                    src="video/homepagevideo.mp4" 
+                    type="video/mp4"
+                >
                 Your browser does not support the video tag.
                 </video>
             </div>
