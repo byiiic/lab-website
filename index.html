@@ -62,23 +62,25 @@
             </div>
 
             <!-- right video -->
+            
             <div class="w-full md:w-3/5 relative" ref="homeVideoRef">
+                <!-- for mobile icon -->
+                <div
+                    v-if="showPlayButton"
+                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10 cursor-pointer md:hidden"
+                    @click="playVideo"
+                >
+                    <span class="text-white text-6xl">▶</span>
+                </div>
+
                 <video
                 ref="videoRef"
                 class="w-full rounded-lg md:mb-[-90px] md:rounded-none"
-                autoplay
                 muted
                 loop
                 playsinline
                 @click="togglePlay"
                 >
-                <!-- mobile -->
-                <source 
-                    srcset="https://github.com/byiiic/lab-website/releases/download/v1.0/homepagevideo.mp4" 
-                    media="(max-width: 768px)" 
-                    type="video/mp4"
-                >
-                <!-- PC -->
                 <source 
                     src="video/homepagevideo.mp4" 
                     type="video/mp4"

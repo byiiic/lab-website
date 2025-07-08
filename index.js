@@ -5,6 +5,11 @@ createApp({
     const currentView = ref('home');
     const isMobileMenuOpen = ref(false);
     const videoRef = ref(null);
+    const showPlayButton = ref(false);
+    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+    
+    console.log("isMobile:", isMobile);
+
         
     // Refs for intersection observer
     const headingRef = ref(null);
@@ -32,7 +37,23 @@ createApp({
         createObserver(homeVideoRef.value, 'slide-up-fade-in');
         createObserver(resRef.value, 'slide-left-fade-in');
         createObserver(newRef.value, 'slide-right-fade-in');
-});
+
+        if (isMobile) {
+            showPlayButton.value = true;
+        } else if (videoRef.value) {
+            videoRef.value.play().catch(err => {
+            console.warn('PC autoplay blocked:', err);
+            });
+        }
+    });
+        
+    const playVideo = () => {
+      const video = videoRef.value;
+      if (video && video.paused) {
+        video.play();
+        showPlayButton.value = false; // hide play button after playing
+      }
+    };
 
     const togglePlay = () => {
     if (!videoRef.value) return;
@@ -151,7 +172,9 @@ createApp({
         subheadingRef,
         homeVideoRef,
         resRef,
-        newRef
+        newRef,
+        playVideo,
+        showPlayButton
     };
 }
 }).mount('#app');
