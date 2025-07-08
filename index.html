@@ -13,36 +13,40 @@
     <nav class="bg-gray-200 shadow-lg fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-            <div class="text-l md:text-2xl font-bold text-gray-600">Whole-Cell Modeling Lab</div>
+                <!-- Logo -->
+                <div class="text-l md:text-2xl font-bold text-gray-600">Whole-Cell Modeling Lab</div>
 
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex space-x-8">
-                <a @click="currentView = 'home'; scrollTo('#app')" class="cursor-pointer hover:text-gray-400">Home</a>
-                <a @click="currentView = 'home'; scrollTo('#products')" class="cursor-pointer hover:text-gray-400">Research</a>
-                <a @click="currentView = 'home'; scrollTo('#tutorials')" class="cursor-pointer hover:text-gray-400">News</a>
-                <a @click="currentView = 'home'; scrollTo('#contact')" class="cursor-pointer hover:text-gray-400">Contact</a>
-            </div>
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex space-x-8">
+                    <a @click="currentView = 'home'; scrollTo('#app')" class="cursor-pointer hover:text-gray-400">Home</a>
+                    <a @click="currentView = 'home'; scrollTo('#products')" class="cursor-pointer hover:text-gray-400">Research</a>
+                    <a @click="currentView = 'home'; scrollTo('#tutorials')" class="cursor-pointer hover:text-gray-400">News</a>
+                    <a @click="currentView = 'home'; scrollTo('#contact')" class="cursor-pointer hover:text-gray-400">Contact</a>
+                </div>
 
-            <!-- Mobile button -->
-            <button class="md:hidden text-2xl" @click="isMobileMenuOpen = !isMobileMenuOpen">☰</button>
+                <!-- Mobile button -->
+                <button v-if="isMobile" class="text-2xl" @click="isMobileMenuOpen = !isMobileMenuOpen">☰</button>
             </div>
 
             <!-- Mobile Nav -->
             <div v-if="isMobileMenuOpen" class="flex flex-col space-y-4 md:hidden pb-4">
-            <a @click="currentView = 'home'; isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">Home</a>
-            <a @click="currentView = 'home'; scrollTo('#products'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">Research</a>
-            <a @click="currentView = 'home'; scrollTo('#tutorials'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">News</a>
-            <a @click="currentView = 'home'; scrollTo('#contact'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">Contact</a>
+                <a @click="currentView = 'home'; isMobileMenuOpen = false; scrollTo('#app')" class="cursor-pointer hover:text-gray-400">Home</a>
+                <a @click="currentView = 'home'; scrollTo('#products'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">Research</a>
+                <a @click="currentView = 'home'; scrollTo('#tutorials'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">News</a>
+                <a @click="currentView = 'home'; scrollTo('#contact'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">Contact</a>
             </div>
         </div>
     </nav>
+
+    <!-- Spacer to avoid content being hidden under the fixed nav -->
+    <div class="h-20 bg-gray-400"></div>
 
     <!-- router -->
     <main class="flex-grow">
       <!-- Home -->
       <div v-if="currentView === 'home'">
-        <header class="relative bg-gray-900 text-white pt-24 pb-5 md:pt-48 md:pb-32">
-        <div class="absolute inset-0 bg-[url('img/background.png')] bg-cover bg-top md:bg-center opacity-60"></div>
+        <header class="relative bg-gray-900 text-white pt-8 pb-5 md:pt-44 md:pb-32">
+        <div class="absolute inset-0 bg-[url('img/background.png')] bg-cover bg-center md:bg-center opacity-60"></div>
 
         <div class="relative max-w-4xl mx-auto text-center px-4">
              <h1 class="text-3xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]" ref="headingRef">
@@ -51,6 +55,9 @@
             </h1>
         </div>
         </header>
+
+        <!-- Spacer to avoid content being hidden under the fixed header -->
+        <div class="h-4 bg-gray-400"></div>
 
         <div class="flex flex-col md:flex-row items-center md:space-x-8 space-y-6 md:space-y-0 bg-gray-200 shadow-lg pt-6 px-6 md:pl-24 md:px-0 md:overflow-visible relative">
 
@@ -119,7 +126,7 @@
 
         <!-- tutorials -->
         <section id="tutorials" class="py-16 max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-right mb-12" ref="newRef">News & Tutorials</h2>
+        <h2 class="text-3xl font-bold text-right mb-12" ref="newRef" style="will-change: transform, opacity;">News & Tutorials</h2>
         <div class="grid md:grid-cols-3 gap-8">
             <div 
             v-for="tutorial in tutorials" 

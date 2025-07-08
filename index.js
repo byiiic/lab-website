@@ -174,7 +174,8 @@ createApp({
         resRef,
         newRef,
         playVideo,
-        showPlayButton
+        showPlayButton,
+        isMobile
     };
 }
 }).mount('#app');
