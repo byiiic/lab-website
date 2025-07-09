@@ -1,4 +1,4 @@
-const { createApp, ref, computed, onMounted } = Vue;
+const { createApp, ref, computed, onMounted, nextTick } = Vue;
 
 createApp({
     setup() {
@@ -138,10 +138,22 @@ createApp({
         const el = document.querySelector(selector);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
         }, 50);
+        };
+        
+    // jump to section without scrolling
+    const jumpTo = (selector) => {
+        console.log("jump!")
+            
+        nextTick(() => {
+            const el = document.querySelector(selector);
+            if (el) {
+            el.scrollIntoView({ behavior: 'auto', block: 'start' });
+            }
+        });
     };
 
+
     const openModal = (imgUrl) => {
-    console.log('方法被调用，参数:', imgUrl);
     if (!imgUrl) return; 
     console.log('openModal called with:', imgUrl); 
     modalImage.value = imgUrl;
@@ -161,6 +173,7 @@ createApp({
         currentProduct,
         currentTutorial,
         scrollTo,
+        jumpTo,
         openModal,
         closeModal,
         showModal,
