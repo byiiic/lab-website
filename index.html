@@ -16,49 +16,98 @@
             <div class="text-l md:text-2xl font-bold text-gray-600">
               Whole-Cell Modeling Lab
             </div>
-            <div class="hidden md:flex space-x-8 items-center"> 
-                <a @click="handleNavigation('home', '#app')" class="cursor-pointer hover:text-gray-400">Home</a>
-                <a @click="handleNavigation('home', '#products')" class="cursor-pointer hover:text-gray-400">Research</a>
-                <a @click="handleNavigation('home', '#tutorials')" class="cursor-pointer hover:text-gray-400">News</a>
-                
-                <div 
-                    class="relative h-full flex items-center" 
-                    @mouseenter="isAboutHovered = true" 
-                    @mouseleave="isAboutHovered = false"
-                >
-                    <a
-                        @click="handleNavigation('about')" 
-                        class="cursor-pointer hover:text-gray-400"
-                    >
-                        About
-                    </a>
+            <div class="hidden md:flex space-x-8 items-center">
+              <a
+                @click="handleNavigation('home', '#app')"
+                class="cursor-pointer hover:text-gray-400"
+                >Home</a
+              >
+              <a
+                @click="handleNavigation('home', '#products')"
+                class="cursor-pointer hover:text-gray-400"
+                >Research</a
+              >
+              <a
+                @click="handleNavigation('home', '#tutorials')"
+                class="cursor-pointer hover:text-gray-400"
+                >News</a
+              >
 
-                    <div 
-                        v-if="isAboutHovered"
-                        class="absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-200 text-gray-600 shadow-xl rounded-b-md py-2 w-24 flex flex-col z-50 transition-opacity duration-200"
-                    >
-                        <a 
-                            @click="handleNavigation('about', '#about-members')" 
-                            class="px-2 py-3 hover:bg-gray-300 hover:text-gray-800 cursor-pointer text-sm text-center transition-colors"
-                        >
-                            Members
-                        </a>
-                        
-                        <a 
-                            @click="handleNavigation('about', '#about-contact')" 
-                            class="px-2 py-3 hover:bg-gray-300 hover:text-gray-800 cursor-pointer text-sm text-center transition-colors"
-                        >
-                            Contact Us
-                        </a>
-                    </div>
+              <div
+                class="relative h-full flex items-center"
+                @mouseenter="isAboutHovered = true"
+                @mouseleave="isAboutHovered = false"
+              >
+                <a
+                  @click="handleNavigation('about')"
+                  class="cursor-pointer hover:text-gray-400"
+                >
+                  About
+                </a>
+
+                <div
+                  v-if="isAboutHovered"
+                  class="absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-200 text-gray-600 shadow-xl rounded-b-md py-2 w-24 flex flex-col z-50 transition-opacity duration-200"
+                >
+                  <a
+                    @click="handleNavigation('about', '#about-members')"
+                    class="px-2 py-3 hover:bg-gray-300 hover:text-gray-800 cursor-pointer text-sm text-center transition-colors"
+                  >
+                    Members
+                  </a>
+
+                  <a
+                    @click="handleNavigation('about', '#about-contact')"
+                    class="px-2 py-3 hover:bg-gray-300 hover:text-gray-800 cursor-pointer text-sm text-center transition-colors"
+                  >
+                    Contact Us
+                  </a>
                 </div>
+              </div>
             </div>
+
+            <!-- Mobile button -->
+            <button
+              v-if="isMobile"
+              class="text-2xl"
+              @click="isMobileMenuOpen = !isMobileMenuOpen"
+            >
+              ☰
+            </button>
+          </div>
+
+          <!-- Mobile Nav -->
+          <div
+            v-if="isMobileMenuOpen"
+            class="flex flex-col space-y-4 md:hidden pb-4"
+          >
+            <a
+              @click="handleNavigation('home', '#app')"
+              class="cursor-pointer hover:text-gray-400"
+              >Home</a
+            >
+            <a
+              @click="handleNavigation('home', '#products')"
+              class="cursor-pointer hover:text-gray-400"
+              >Research</a
+            >
+            <a
+              @click="handleNavigation('home', '#tutorials')"
+              class="cursor-pointer hover:text-gray-400"
+              >News</a
+            >
+            <a
+              @click="handleNavigation('about')"
+              class="cursor-pointer hover:text-gray-400"
+              >About</a
+            >
+          </div>
         </div>
       </nav>
 
       <main class="flex-grow">
         <div v-if="currentView === 'home'">
-          <div class="h-20 bg-gray-400"></div> 
+          <div class="h-20 bg-gray-400"></div>
           <header
             class="relative bg-gray-900 text-white pt-8 pb-5 md:pt-44 md:pb-32"
           >
@@ -144,67 +193,109 @@
           </section>
         </div>
 
-        <div v-else-if="currentView === 'about'" class="py-16 max-w-6xl mx-auto px-4">
-            <div class="h-10"></div> 
-            <button 
+        <div
+          v-else-if="currentView === 'about'"
+          class="py-16 max-w-6xl mx-auto px-4"
+        >
+          <div class="h-10"></div>
+          <button
             @click="handleNavigation('home')"
-            class="mb-8 flex items-center text-gray-600 hover:text-gray-800 transition">
-            <svg class=" h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
+            class="mb-8 flex items-center text-gray-600 hover:text-gray-800 transition"
+          >
+            <svg class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
             Back to Home
-            </button>
+          </button>
 
-            <div class="mb-16">
-                <h1 id="about-members" class="text-4xl font-bold mb-12 text-center text-gray-800 scroll-mt-40">Our Team</h1>
-                
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div v-for="(member, index) in members" :key="index" class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
-                        <div class="w-32 h-32 mb-4 rounded-full overflow-hidden bg-gray-100 border-4 border-gray-50">
-                            <img :src="member.image" :alt="member.name" class="w-full h-full object-cover">
-                        </div>
-                        
-                        <h3 class="text-xl font-bold text-gray-800">{{ member.name }}</h3>
-                        <p class="text-blue-600 font-medium mb-2">{{ member.role }}</p>
-                        <p class="text-gray-600 text-sm">{{ member.description }}</p>
-                    </div>
+          <div class="mb-16">
+            <h1
+              id="about-members"
+              class="text-4xl font-bold mb-12 text-center text-gray-800 scroll-mt-40"
+            >
+              Our Team
+            </h1>
+
+            <div class="grid md:grid-cols-3 gap-8">
+              <div
+                v-for="(member, index) in members"
+                :key="index"
+                class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center"
+              >
+                <div
+                  class="w-32 h-32 mb-4 rounded-full overflow-hidden bg-gray-100 border-4 border-gray-50"
+                >
+                  <img
+                    :src="member.image"
+                    :alt="member.name"
+                    class="w-full h-full object-cover"
+                  />
                 </div>
+
+                <h3 class="text-xl font-bold text-gray-800">
+                  {{ member.name }}
+                </h3>
+                <p class="text-blue-600 font-medium mb-2">{{ member.role }}</p>
+                <p class="text-gray-600 text-sm">{{ member.description }}</p>
+              </div>
             </div>
+          </div>
 
-            <hr class="border-gray-300 mb-16">
+          <hr class="border-gray-300 mb-16" />
 
-            <div class="flex flex-col md:flex-row gap-12">
-                <div class="md:w-1/2">
-                    <h2 id="about-contact" class="text-3xl font-bold mb-6 text-gray-800">Contact Us</h2>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
-                        We are always looking for motivated students and collaborators. 
-                        If you are interested in whole-cell modeling, please don't hesitate to reach out.
+          <div class="flex flex-col md:flex-row gap-12">
+            <div class="md:w-1/2">
+              <h2
+                id="about-contact"
+                class="text-3xl font-bold mb-6 text-gray-800"
+              >
+                Contact Us
+              </h2>
+              <p class="text-gray-600 mb-6 leading-relaxed">
+                We are always looking for motivated students and collaborators.
+                If you are interested in whole-cell modeling, please don't
+                hesitate to reach out.
+              </p>
+
+              <div class="space-y-4">
+                <div class="flex items-start">
+                  <span class="text-2xl mr-4">📍</span>
+                  <div>
+                    <h4 class="font-bold text-gray-800">Address</h4>
+                    <p class="text-gray-600">
+                      China, Shang Hai Shi, Pudong, 华夏中路393号 <br />
+                      Shanghaitech University
                     </p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-start">
-                            <span class="text-2xl mr-4">📍</span>
-                            <div>
-                                <h4 class="font-bold text-gray-800">Address</h4>
-                                <p class="text-gray-600">China, Shang Hai Shi, Pudong, 华夏中路393号 <br> Shanghaitech University</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <span class="text-2xl mr-4">📧</span>
-                            <div>
-                                <h4 class="font-bold text-gray-800">Email</h4>
-                                <a href="mailto:cellmod@university.edu" class="text-blue-600 hover:underline">cellmod@university.edu</a>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
                 </div>
 
-                <div class="md:w-1/2 bg-gray-100 rounded-lg p-8 flex items-center justify-center text-gray-400">
-                    <div class="text-center">
-                        <p class="text-xl mb-2">Google Maps / Contact Form</p>
-                        <p class="text-sm">(Placeholder for external embed)</p>
-                    </div>
+                <div class="flex items-start">
+                  <span class="text-2xl mr-4">📧</span>
+                  <div>
+                    <h4 class="font-bold text-gray-800">Email</h4>
+                    <a
+                      href="mailto:cellmod@university.edu"
+                      class="text-blue-600 hover:underline"
+                      >cellmod@university.edu</a
+                    >
+                  </div>
                 </div>
+              </div>
             </div>
+
+            <div
+              class="md:w-1/2 bg-gray-100 rounded-lg p-8 flex items-center justify-center text-gray-400"
+            >
+              <div class="text-center">
+                <p class="text-xl mb-2">Google Maps / Contact Form</p>
+                <p class="text-sm">(Placeholder for external embed)</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div v-else class="py-16 max-w-4xl mx-auto px-4">
