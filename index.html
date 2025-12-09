@@ -1,86 +1,104 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Whole-Cell Modeling Lab</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="bg-gray-50">
-  <div id="app" class="min-h-screen flex flex-col">
-    <nav class="bg-gray-200 shadow-lg fixed top-0 w-full z-50">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whole-Cell Modeling Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="bg-gray-50">
+    <div id="app" class="min-h-screen flex flex-col">
+      <nav class="bg-gray-200 shadow-lg fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <!-- Logo -->
-                <div class="text-l md:text-2xl font-bold text-gray-600">Whole-Cell Modeling Lab</div>
-
-                <!-- Desktop Nav -->
-                <div class="hidden md:flex space-x-8">
-                    <a @click="currentView = 'home'; scrollTo('#app')" class="cursor-pointer hover:text-gray-400">Home</a>
-                    <a @click="currentView = 'home'; scrollTo('#products')" class="cursor-pointer hover:text-gray-400">Research</a>
-                    <a @click="currentView = 'home'; scrollTo('#tutorials')" class="cursor-pointer hover:text-gray-400">News</a>
-                    <a @click="currentView = 'home'; scrollTo('#contact')" class="cursor-pointer hover:text-gray-400">Contact</a>
-                </div>
-
-                <!-- Mobile button -->
-                <button v-if="isMobile" class="text-2xl" @click="isMobileMenuOpen = !isMobileMenuOpen">☰</button>
+          <div class="flex justify-between items-center py-4">
+            <div class="text-l md:text-2xl font-bold text-gray-600">
+              Whole-Cell Modeling Lab
             </div>
+            <div class="hidden md:flex space-x-8 items-center"> 
+                <a @click="handleNavigation('home', '#app')" class="cursor-pointer hover:text-gray-400">Home</a>
+                <a @click="handleNavigation('home', '#products')" class="cursor-pointer hover:text-gray-400">Research</a>
+                <a @click="handleNavigation('home', '#tutorials')" class="cursor-pointer hover:text-gray-400">News</a>
+                
+                <div 
+                    class="relative h-full flex items-center" 
+                    @mouseenter="isAboutHovered = true" 
+                    @mouseleave="isAboutHovered = false"
+                >
+                    <a
+                        @click="handleNavigation('about')" 
+                        class="cursor-pointer hover:text-gray-400"
+                    >
+                        About
+                    </a>
 
-            <!-- Mobile Nav -->
-            <div v-if="isMobileMenuOpen" class="flex flex-col space-y-4 md:hidden pb-4">
-                <a @click="currentView = 'home'; isMobileMenuOpen = false; scrollTo('#app')" class="cursor-pointer hover:text-gray-400">Home</a>
-                <a @click="currentView = 'home'; scrollTo('#products'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">Research</a>
-                <a @click="currentView = 'home'; scrollTo('#tutorials'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">News</a>
-                <a @click="currentView = 'home'; scrollTo('#contact'); isMobileMenuOpen = false" class="cursor-pointer hover:text-gray-400">Contact</a>
+                    <div 
+                        v-if="isAboutHovered"
+                        class="absolute top-full left-1/2 transform -translate-x-1/2 bg-gray-200 text-gray-600 shadow-xl rounded-b-md py-2 w-24 flex flex-col z-50 transition-opacity duration-200"
+                    >
+                        <a 
+                            @click="handleNavigation('about', '#about-members')" 
+                            class="px-2 py-3 hover:bg-gray-300 hover:text-gray-800 cursor-pointer text-sm text-center transition-colors"
+                        >
+                            Members
+                        </a>
+                        
+                        <a 
+                            @click="handleNavigation('about', '#about-contact')" 
+                            class="px-2 py-3 hover:bg-gray-300 hover:text-gray-800 cursor-pointer text-sm text-center transition-colors"
+                        >
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
+      </nav>
 
-    <!-- Spacer to avoid content being hidden under the fixed nav -->
-    <div class="h-20 bg-gray-400"></div>
-
-    <!-- router -->
-    <main class="flex-grow">
-      <!-- Home -->
-      <div v-if="currentView === 'home'">
-        <header class="relative bg-gray-900 text-white pt-8 pb-5 md:pt-44 md:pb-32">
-        <div class="absolute inset-0 bg-[url('img/background.png')] bg-cover bg-center md:bg-center opacity-60"></div>
-
-        <div class="relative max-w-4xl mx-auto text-center px-4">
-             <h1 class="text-3xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]" ref="headingRef">
+      <main class="flex-grow">
+        <div v-if="currentView === 'home'">
+          <div class="h-20 bg-gray-400"></div> 
+          <header
+            class="relative bg-gray-900 text-white pt-8 pb-5 md:pt-44 md:pb-32"
+          >
+            <div
+              class="absolute inset-0 bg-[url('img/background.png')] bg-cover bg-center opacity-60"
+            ></div>
+            <div class="relative max-w-4xl mx-auto text-center px-4">
+              <h1
+                class="text-3xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]"
+                ref="headingRef"
+              >
                 <span class="block">Graph-based</span>
                 <span class="block">Whole-Cell Modeling</span>
-            </h1>
-        </div>
-        </header>
+              </h1>
+            </div>
+          </header>
 
-        <!-- Spacer to avoid content being hidden under the fixed header -->
-        <div class="h-4 bg-gray-400"></div>
+          <div class="h-4 bg-gray-400"></div>
 
-        <div class="flex flex-col md:flex-row items-center md:space-x-8 space-y-6 md:space-y-0 bg-gray-200 shadow-lg pt-6 px-6 md:pl-24 md:px-0 md:overflow-visible relative">
-
-            <!-- left text -->
+          <div
+            class="flex flex-col md:flex-row items-center md:space-x-8 space-y-6 md:space-y-0 bg-gray-200 shadow-lg pt-6 px-6 md:pl-24 md:px-0 relative"
+          >
             <div class="flex-1" ref="subheadingRef">
-                <p class="text-l text-gray-600 md:leading-relaxed md:text-2xl">
-                GraphMM integrates diverse biological models across space, time, and structure using probabilistic representations. Inspired by projects like autoPACK, it bridges scales from molecules to islets.
-                </p>
+              <p class="text-l text-gray-600 md:leading-relaxed md:text-2xl">
+                GraphMM integrates diverse biological models across space, time,
+                and structure using probabilistic representations. Inspired by
+                projects like autoPACK, it bridges scales from molecules to
+                islets.
+              </p>
             </div>
 
-            <!-- right video -->
-            
             <div class="w-full md:w-3/5 relative" ref="homeVideoRef">
-                <!-- for mobile icon -->
-                <div
-                    v-if="showPlayButton"
-                    class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10 cursor-pointer rounded-lg md:hidden"
-                    @click="playVideo"
-                >
-                    <span class="text-white text-6xl">▶</span>
-                </div>
-
-                <video
+              <div
+                v-if="showPlayButton"
+                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10 cursor-pointer rounded-lg md:hidden"
+                @click="playVideo"
+              >
+                <span class="text-white text-6xl">▶</span>
+              </div>
+              <video
                 ref="videoRef"
                 class="w-full rounded-lg md:mb-[-90px] md:rounded-none"
                 muted
@@ -88,189 +106,208 @@
                 playsinline
                 @click="togglePlay"
                 poster="img/homepagevideo.png"
-                >
-                <source 
-                    src="video/homepagevideo.mp4" 
-                    type="video/mp4"
-                >
-                Your browser does not support the video tag.
-                </video>
+              >
+                <source src="video/homepagevideo.mp4" type="video/mp4" />
+              </video>
             </div>
-        </div>
-
-        <!-- Features -->
-        <section id="products" class="py-16 max-w-6xl mx-auto px-4">
-          <h2 class="text-3xl font-bold text-left mb-12" ref="resRef">Research</h2>
-          <div class="grid md:grid-cols-3 gap-8">
-            <div 
-            v-for="product in products" 
-            :key="product.id"
-            @click="currentView = 'product-' + product.id"
-            class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col break-words"
-            >
-            <div class="bg-gray-100 h-40 rounded-md mb-4 flex items-center justify-center overflow-hidden">
-                <img 
-                v-if="product.image" 
-                :src="product.image" 
-                :alt="product.title"
-                class="w-full h-full object-cover"
-                >
-                <span v-else class="text-5xl">{{ product.icon }}</span>
-            </div>
-            <h3 class="text-xl font-semibold mb-2 break-words">{{ product.title }}</h3>
-            <p class="text-gray-600 mt-auto break-words pt-4">Click to view details &gt;</p>
-            </div>
-
           </div>
-        </section>
 
-        <!-- tutorials -->
-        <section id="tutorials" class="py-16 max-w-6xl mx-auto px-4">
-        <h2 class="text-3xl font-bold text-right mb-12" ref="newRef" style="will-change: transform, opacity;">News & Tutorials</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            <div 
-            v-for="tutorial in tutorials" 
-            :key="tutorial.id"
-            @click="currentView = 'tutorial-' + tutorial.id"
-            class="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition hover:scale-[1.02] flex flex-col break-words"
-            >
-            <div class="bg-gray-100 h-40 rounded-md mb-4 flex items-center justify-center overflow-hidden">
-                <img 
-                v-if="tutorial.image" 
-                :src="tutorial.image" 
-                :alt="tutorial.title"
-                class="w-full h-full object-cover"
-                >
-                <span v-else class="text-5xl">{{ tutorial.icon }}</span>
+          <section id="products" class="py-16 max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-left mb-12 mt-6" ref="resRef">
+              Research
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+              <info-card
+                v-for="p in products"
+                :key="p.id"
+                :item="p"
+                @click="currentView = 'product-' + p.id"
+              >
+              </info-card>
             </div>
-            <h3 class="text-xl font-semibold mb-2 break-words">{{ tutorial.title }}</h3>
-            <p class="text-gray-400">{{ tutorial.time }}</p>
-            <p class="text-gray-600 mt-auto break-words pt-4">Click to view details &gt;</p>
+          </section>
+
+          <section id="tutorials" class="py-16 max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-right mb-12" ref="newRef">
+              News & Tutorials
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+              <info-card
+                v-for="t in tutorials"
+                :key="t.id"
+                :item="t"
+                :subtitle="t.time"
+                @click="currentView = 'tutorial-' + t.id"
+              >
+              </info-card>
             </div>
+          </section>
         </div>
-        </section>
 
-      </div>
+        <div v-else-if="currentView === 'about'" class="py-16 max-w-6xl mx-auto px-4">
+            <div class="h-10"></div> 
+            <button 
+            @click="handleNavigation('home')"
+            class="mb-8 flex items-center text-gray-600 hover:text-gray-800 transition">
+            <svg class=" h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
+            Back to Home
+            </button>
 
-      <!-- Features info -->
-      <div v-else-if="currentView.startsWith('product-')" class="py-16 max-w-4xl mx-auto px-4">
-        <button 
-          @click="currentView = 'home'; jumpTo('#products')"
-          class="mb-8 flex items-center text-gray-600 hover:text-gray-800 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-          </svg>
-          Back
-        </button>
-
-        <div v-if="currentProduct" class="bg-white p-8 rounded-lg shadow-md">
-          <div class="flex flex-col md:flex-row gap-8">
-            <div class="bg-gray-100 w-full md:w-1/2 h-96 rounded-lg flex items-center justify-center cursor-zoom-in" @click="openModal(currentProduct.image)">
-              <img 
-                v-if="currentProduct.image" 
-                :src="currentProduct.image" 
-                :alt="currentProduct.title"
-                class="w-full h-full object-cover"
-                >
-                <span v-else class="text-8xl">{{ currentProduct.icon }}</span>
-            </div>
-            <div class="flex flex-col">
-              <h1 class="text-3xl font-bold mb-4">{{ currentProduct.title }}</h1>
-              <div class="prose max-w-none">
-                <p class="text-gray-700 mb-4">{{ currentProduct.description }}</p>
-              </div>
-              <p v-if="currentProduct.ref" class="text-gray-600 mt-auto">
-                GitHub:
-                <a :href="currentProduct.ref" target="_blank" rel="noopener noreferrer"
-                    class="text-blue-600 underline hover:text-blue-800">
-                    {{ currentProduct.ref.replace('https://', '') }}
-                </a>
-              </p>
-            </div>
-
-            <div v-if="showModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4" @click.self="closeModal">
-                <div class="relative max-w-6xl max-h-[90vh]">
-                <button @click="closeModal" class="absolute -top-10 right-0 text-white text-2xl">
-                    &times;
-                </button>
-                <img 
-                    :src="modalImage" 
-                    class="max-w-full max-h-[90vh] object-contain"
-                >
+            <div class="mb-16">
+                <h1 id="about-members" class="text-4xl font-bold mb-12 text-center text-gray-800 scroll-mt-40">Our Team</h1>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div v-for="(member, index) in members" :key="index" class="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
+                        <div class="w-32 h-32 mb-4 rounded-full overflow-hidden bg-gray-100 border-4 border-gray-50">
+                            <img :src="member.image" :alt="member.name" class="w-full h-full object-cover">
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-gray-800">{{ member.name }}</h3>
+                        <p class="text-blue-600 font-medium mb-2">{{ member.role }}</p>
+                        <p class="text-gray-600 text-sm">{{ member.description }}</p>
+                    </div>
                 </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- News info -->
-      <div v-else-if="currentView.startsWith('tutorial-')" class="py-16 max-w-4xl mx-auto px-4">
-        <button 
-          @click="currentView = 'home'; jumpTo('#tutorials')"
-          class="mb-8 flex items-center text-gray-600 hover:text-gray-800 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
-          </svg>
-          Back
-        </button>
+            <hr class="border-gray-300 mb-16">
 
-        <div v-if="currentTutorial" class="bg-white p-8 rounded-lg shadow-md">
-          <div class="flex flex-col md:flex-row gap-8">
-            <div class="bg-gray-100 w-full md:w-1/2 h-96 rounded-lg flex items-center justify-center">
-              <span class="text-8xl">{{ currentTutorial.icon }}</span>
+            <div class="flex flex-col md:flex-row gap-12">
+                <div class="md:w-1/2">
+                    <h2 id="about-contact" class="text-3xl font-bold mb-6 text-gray-800">Contact Us</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        We are always looking for motivated students and collaborators. 
+                        If you are interested in whole-cell modeling, please don't hesitate to reach out.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-4">📍</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Address</h4>
+                                <p class="text-gray-600">China, Shang Hai Shi, Pudong, 华夏中路393号 <br> Shanghaitech University</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <span class="text-2xl mr-4">📧</span>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Email</h4>
+                                <a href="mailto:cellmod@university.edu" class="text-blue-600 hover:underline">cellmod@university.edu</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:w-1/2 bg-gray-100 rounded-lg p-8 flex items-center justify-center text-gray-400">
+                    <div class="text-center">
+                        <p class="text-xl mb-2">Google Maps / Contact Form</p>
+                        <p class="text-sm">(Placeholder for external embed)</p>
+                    </div>
+                </div>
             </div>
-            <div class="flex flex-col">
-              <h1 class="text-3xl font-bold mb-4">{{ currentTutorial.title }}</h1>
-              <div class="prose max-w-none">
-                <p class="text-gray-700 mb-4">{{ currentTutorial.description }}</p>
+        </div>
+
+        <div v-else class="py-16 max-w-4xl mx-auto px-4">
+          <div class="h-10"></div>
+          <button
+            @click="handleNavigation('home', currentDetail.type === 'Research' ? '#products' : '#tutorials')"
+            class="mb-8 flex items-center text-gray-600 hover:text-gray-800 transition"
+          >
+            <svg class="h-5 w-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Back to {{ currentDetail.type }}
+          </button>
+
+          <div
+            v-if="currentDetail && currentDetail.data"
+            class="bg-white p-8 rounded-lg shadow-md"
+          >
+            <div class="flex flex-col md:flex-row gap-8">
+              <div
+                class="bg-gray-100 w-full md:w-1/2 h-96 rounded-lg flex items-center justify-center cursor-zoom-in"
+                @click="openModal(currentDetail.data.image)"
+              >
+                <img
+                  v-if="currentDetail.data.image"
+                  :src="currentDetail.data.image"
+                  class="w-full h-full object-cover"
+                />
+                <span v-else class="text-8xl"
+                  >{{ currentDetail.data.icon }}</span
+                >
+              </div>
+              <div class="flex flex-col">
+                <h1 class="text-3xl font-bold mb-4">
+                  {{ currentDetail.data.title }}
+                </h1>
+                <div class="prose max-w-none">
+                  <p class="text-gray-700 mb-4">
+                    {{ currentDetail.data.description }}
+                  </p>
+                </div>
+
+                <p v-if="currentDetail.data.ref" class="text-gray-600 mt-auto">
+                  GitHub:
+                  <a
+                    :href="currentDetail.data.ref"
+                    target="_blank"
+                    class="text-blue-600 underline"
+                    >{{ currentDetail.data.ref.replace('https://', '') }}</a
+                  >
+                </p>
+                <p
+                  v-if="currentDetail.data.time"
+                  class="text-gray-500 mt-auto text-sm"
+                >
+                  {{ currentDetail.data.time }}
+                </p>
               </div>
             </div>
           </div>
         </div>
+      </main>
+
+      <div
+        v-if="showModal"
+        class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+        @click.self="closeModal"
+      >
+        <div class="relative max-w-6xl max-h-[90vh]">
+          <button
+            @click="closeModal"
+            class="absolute -top-10 right-0 text-white text-2xl"
+            aria-label="Close"
+          >
+            &times;
+          </button>
+          <img
+            :src="modalImage"
+            class="max-w-full max-h-[90vh] object-contain"
+          />
+        </div>
       </div>
 
-    </main>
-    
+      <footer id="about" class="bg-gray-800 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+          <p>© 2025 Whole-Cell Modeling Lab · Department of Bioengineering</p>
+          <p>
+            Email:
+            <a
+              href="mailto:cellmod@university.edu"
+              class="text-blue-600 underline"
+              >cellmod@university.edu</a
+            >
+          </p>
+        </div>
+      </footer>
+    </div>
 
-      
-    <!-- footer -->
-    <footer id="contact" class="bg-gray-800 text-white py-8">
-      <div class="max-w-6xl mx-auto px-4 text-center">
-        <p>©  2025 Whole-Cell Modeling Lab · Department of Bioengineering</p>
-        <p> Email: <a href="mailto:cellmod@university.edu" class="text-blue-600 underline">cellmod@university.edu</a></p>
-      </div>
-    </footer>
-  </div>
-
-  <script src="index.js"></script>
-</body>
+    <script src="data.js"></script>
+    <script src="index.js"></script>
+  </body>
 </html>
-
-<!-- <ul class="list-disc pl-5 space-y-2">
-                  <li v-for="(feature, index) in currentProduct.features" :key="index">
-                    {{ feature }}
-                  </li>
-                </ul>
-                <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <h3 class="font-semibold text-gray-800 mb-2">技术参数</h3>
-                  <table class="min-w-full">
-                    <tr v-for="(spec, key) in currentProduct.specs" :key="key">
-                      <td class="py-2 pr-4 font-medium">{{ key }}:</td>
-                      <td class="py-2">{{ spec }}</td>
-                    </tr>
-                  </table>
-                </div> -->
-
-
-<!-- features: [
-              "实时数据可视化",
-              "多维度分析报告",
-              "预测性分析引擎",
-              "API集成支持"
-            ],
-            specs: {
-              "版本": "v3.2.1",
-              "数据容量": "无上限",
-              "响应时间": "<500ms",
-              "安全认证": "ISO 27001"
-            } -->
