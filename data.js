@@ -1,5 +1,5 @@
 // data.js
-const AppData = {
+window.AppData = {
   products: [
     {
       id: 1,

@@ -37,9 +37,13 @@ createApp({
     const isAboutHovered = ref(false);
 
     // 数据从全局变量 AppData 获取 (在 data.js 中定义)
-    const products = ref(AppData.products);
-    const tutorials = ref(AppData.tutorials);
-    const members = ref(AppData.members);
+    const dataParsed = window.AppData || {};
+
+    // 2. 使用 || [] 做兜底
+    // 如果 products 数据不存在，就给一个空数组，保证页面能渲染出框架，而不是白屏
+    const products = ref(dataParsed.products || []);
+    const tutorials = ref(dataParsed.tutorials || []);
+    const members = ref(dataParsed.members || []);
 
     const showModal = ref(false);
     const modalImage = ref("");
