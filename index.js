@@ -83,7 +83,8 @@ createApp({
         });
       } else {
         // 如果没有 selector，说明是单纯的回到顶部
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        // window.scrollTo({ top: 0, behavior: "smooth" });
+        window.scrollTo({ top: 0, behavior: "auto" });
       }
     };
 
