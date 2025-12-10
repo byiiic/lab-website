@@ -3,10 +3,12 @@ window.AppData = {
   products: [
     {
       id: 1,
-      title: "autoPACK",
+      title: "iPA",
       icon: "📊",
       description:
-        "Packing of complex spatial models (proteins, vesicles) into cellular geometry with no overlaps.",
+        "An integrated toolkit for processing and analyzing cell images for correlative studies across modalities.",
+      image: "img/ipa.jpg",
+      ref: "https://github.com/lluoto/iPA",
     },
     {
       id: 2,
@@ -19,7 +21,7 @@ window.AppData = {
     },
     {
       id: 3,
-      title: "cellVIEW",
+      title: "Discovering & Coupling Dynamical Systems",
       icon: "☁️",
       description:
         "Interactive 3D visualization of mesoscale models using Unity/WebGL engines.",
