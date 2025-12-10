@@ -7,16 +7,28 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="style.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            screens: {
+              ml: { raw: "(min-aspect-ratio: 5/4)" }, // ✨ medium large
+              mL: { raw: "(min-aspect-ratio: 3/2)" }, // ✨ larger long/wide screens
+            },
+          },
+        },
+      };
+    </script>
   </head>
   <body class="bg-gray-50">
     <div id="app" class="min-h-screen flex flex-col">
       <nav class="bg-gray-200 shadow-lg fixed top-0 w-full z-50">
         <div class="max-w-7xl mx-auto px-4">
           <div class="flex justify-between items-center py-4">
-            <div class="text-l md:text-2xl font-bold text-gray-600">
+            <div class="text-l ml:text-2xl font-bold text-gray-600">
               Whole-Cell Modeling Lab
             </div>
-            <div class="hidden md:flex space-x-8 items-center">
+            <div class="hidden ml:flex space-x-8 items-center">
               <a
                 @click="handleNavigation('home', '#app')"
                 class="cursor-pointer hover:text-gray-400"
@@ -79,7 +91,7 @@
           <!-- Mobile Nav -->
           <div
             v-if="isMobileMenuOpen"
-            class="flex flex-col space-y-4 md:hidden pb-4"
+            class="flex flex-col space-y-4 ml:hidden pb-4"
           >
             <a
               @click="handleNavigation('home', '#app')"
@@ -116,7 +128,7 @@
             ></div>
             <div class="relative max-w-4xl mx-auto text-center px-4">
               <h1
-                class="text-3xl md:text-7xl font-bold mb-4 md:leading-[5.5rem]"
+                class="text-3xl md:text-6xl font-bold mb-4 md:leading-[5.5rem]"
                 ref="headingRef"
               >
                 <span class="block">Graph-based</span>
@@ -125,31 +137,38 @@
             </div>
           </header>
 
-          <div class="h-4 bg-gray-400"></div>
+          <div class="h-4 bg-gray-400 shadow-lg"></div>
 
           <div
-            class="flex flex-col md:flex-row items-center md:space-x-8 space-y-6 md:space-y-0 bg-gray-200 shadow-lg pt-6 px-6 md:pl-24 md:px-0 relative"
+            class="flex flex-col ml:flex-row items-center ml:space-x-8 space-y-6 ml:space-y-0 bg-gray-200 shadow-lg pt-6 px-6 ml:pl-24 ml:px-0 relative"
           >
-            <div class="flex-1" ref="subheadingRef">
-              <p class="text-l text-gray-600 md:leading-relaxed md:text-2xl">
-                GraphMM integrates diverse biological models across space, time,
-                and structure using probabilistic representations. Inspired by
-                projects like autoPACK, it bridges scales from molecules to
-                islets.
+            <div
+              class="flex-1 max-w-lg mx-auto ml:max-w-none"
+              ref="subheadingRef"
+            >
+              <p class="text-xl text-gray-600 ml:leading-relaxed ml:text-2xl">
+                ODE whole-cell modeling is a powerful approach to simulate and
+                understand the complex biological processes within a cell. By
+                representing cellular components and their interactions as
+                graphs, we can capture the dynamic behavior of the entire cell
+                in a comprehensive manner.
               </p>
             </div>
 
-            <div class="w-full md:w-3/5 relative" ref="homeVideoRef">
+            <div
+              class="w-full ml:w-2/5 mL:w-3/5 relative max-w-lg mx-auto ml:max-w-none pb-6 ml:pt-0"
+              ref="homeVideoRef"
+            >
               <div
                 v-if="showPlayButton"
-                class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 z-10 cursor-pointer rounded-lg md:hidden"
+                class="absolute top-0 left-0 right-0 bottom-6 flex items-center justify-center bg-black bg-opacity-40 z-10 cursor-pointer rounded-lg ml:hidden"
                 @click="playVideo"
               >
                 <span class="text-white text-6xl">▶</span>
               </div>
               <video
                 ref="videoRef"
-                class="w-full rounded-lg md:mb-[-90px] md:rounded-none"
+                class="w-full rounded-lg ml:mb-[-90px] ml:rounded-none"
                 muted
                 loop
                 playsinline
@@ -162,10 +181,15 @@
           </div>
 
           <section id="products" class="py-4 max-w-6xl mx-auto px-4 mb-12">
-            <h2 class="text-3xl font-bold text-left mt-20" ref="resRef">
+            <h2
+              class="text-3xl font-bold text-left mt-12 ml:mt-20 mb-6 max-w-lg mx-auto ml:max-w-none"
+              ref="resRef"
+            >
               Research
             </h2>
-            <div class="grid md:grid-cols-3 gap-8">
+            <div
+              class="grid ml:grid-cols-3 gap-8 max-w-lg mx-auto ml:max-w-none"
+            >
               <info-card
                 v-for="p in products"
                 :key="p.id"
@@ -177,10 +201,15 @@
           </section>
 
           <section id="tutorials" class="py-4 max-w-6xl mx-auto px-4 mb-12">
-            <h2 class="text-3xl font-bold text-right mb-6" ref="newRef">
+            <h2
+              class="text-3xl font-bold text-right mb-6 max-w-lg mx-auto ml:max-w-none"
+              ref="newRef"
+            >
               News & Tutorials
             </h2>
-            <div class="grid md:grid-cols-3 gap-8">
+            <div
+              class="grid ml:grid-cols-3 gap-8 max-w-lg mx-auto ml:max-w-none"
+            >
               <info-card
                 v-for="t in tutorials"
                 :key="t.id"
@@ -220,7 +249,7 @@
               Our Team
             </h1>
 
-            <div class="grid md:grid-cols-3 gap-8">
+            <div class="grid ml:grid-cols-3 gap-8">
               <div
                 v-for="(member, index) in members"
                 :key="index"
@@ -247,8 +276,8 @@
 
           <hr class="border-gray-300 mb-16" />
 
-          <div class="flex flex-col md:flex-row gap-12">
-            <div class="md:w-1/2">
+          <div class="flex flex-col ml:flex-row gap-12">
+            <div class="ml:w-1/2">
               <h2
                 id="about-contact"
                 class="text-3xl font-bold mb-6 text-gray-800"
@@ -288,7 +317,7 @@
             </div>
 
             <div
-              class="md:w-1/2 rounded-lg overflow-hidden shadow-md h-64 md:h-auto relative bg-gray-200"
+              class="ml:w-1/2 rounded-lg overflow-hidden shadow-md h-64 ml:h-auto relative bg-gray-200"
             >
               <a
                 href="https://www.google.com/maps/place/ShanghaiTech+University/@31.1763741,121.5898769,17z/data=!3m1!4b1!4m6!3m5!1s0x35b27828f381499b:0x5ae88f32ad8196b1!8m2!3d31.1763741!4d121.5924518!16s%2Fm%2F0qftcsg?entry=ttu&g_ep=EgoyMDI1MTIwNy4wIKXMDSoASAFQAw%3D%3D"
@@ -345,10 +374,10 @@
             v-if="currentDetail && currentDetail.data"
             class="bg-white p-8 rounded-lg shadow-md"
           >
-            <div class="flex flex-col md:flex-row gap-8">
+            <div class="flex flex-col ml:flex-row gap-8">
               <div
                 :class="[
-                    'bg-gray-100 w-full md:w-1/1 rounded-lg flex items-center justify-center cursor-zoom-in group overflow-hidden',
+                    'bg-gray-100 w-full ml:w-1/1 rounded-lg flex items-center justify-center cursor-zoom-in group overflow-hidden',
                     currentDetail.data.isHorizontal ? 'h-72' : 'h-96'
                 ]"
                 @click="openModal(currentDetail.data.image)"

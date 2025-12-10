@@ -1,6 +1,5 @@
 const { createApp, ref, computed, onMounted, nextTick } = Vue;
 
-// 定义一个复用的卡片组件，减少 HTML 代码量
 const InfoCard = {
   props: ["item", "subtitle"],
   template: `
@@ -26,21 +25,28 @@ const InfoCard = {
 
 createApp({
   components: {
-    InfoCard, // 注册组件
+    InfoCard,
   },
   setup() {
     const currentView = ref("home");
     const isMobileMenuOpen = ref(false);
     const videoRef = ref(null);
     const showPlayButton = ref(false);
-    const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
     const isAboutHovered = ref(false);
 
-    // 数据从全局变量 AppData 获取 (在 data.js 中定义)
-    const dataParsed = window.AppData || {};
+    const checkMobile = () => {
+      const isUserAgentMobile = /Mobi|Android|iPhone|iPad/i.test(
+        navigator.userAgent
+      );
+      const isPortraitRatio = window.innerWidth / window.innerHeight < 5 / 4;
+      return isUserAgentMobile || isPortraitRatio;
+    };
+    window.addEventListener("resize", () => {
+      isMobile.value = checkMobile();
+    });
+    const isMobile = ref(checkMobile());
 
-    // 2. 使用 || [] 做兜底
-    // 如果 products 数据不存在，就给一个空数组，保证页面能渲染出框架，而不是白屏
+    const dataParsed = window.AppData || {};
     const products = ref(dataParsed.products || []);
     const tutorials = ref(dataParsed.tutorials || []);
     const members = ref(dataParsed.members || []);
@@ -48,14 +54,12 @@ createApp({
     const showModal = ref(false);
     const modalImage = ref("");
 
-    // 动画 Refs
     const headingRef = ref(null);
     const subheadingRef = ref(null);
     const homeVideoRef = ref(null);
     const resRef = ref(null);
     const newRef = ref(null);
 
-    // 计算属性：当前选中的项目
     const currentDetail = computed(() => {
       if (currentView.value.startsWith("product-")) {
         const id = parseInt(currentView.value.split("-")[1]);
@@ -71,10 +75,9 @@ createApp({
       return null;
     });
 
-    // 统一导航处理函数 (优化了 setTimeout)
     const handleNavigation = (viewName, selector) => {
       currentView.value = viewName;
-      isMobileMenuOpen.value = false; // 自动关闭移动端菜单
+      isMobileMenuOpen.value = false;
 
       if (selector) {
         nextTick(() => {
@@ -82,8 +85,6 @@ createApp({
           if (el) el.scrollIntoView({ behavior: "smooth" });
         });
       } else {
-        // 如果没有 selector，说明是单纯的回到顶部
-        // window.scrollTo({ top: 0, behavior: "smooth" });
         window.scrollTo({ top: 0, behavior: "auto" });
       }
     };
@@ -113,7 +114,6 @@ createApp({
     };
 
     onMounted(() => {
-      // Observer 逻辑保持不变，这部分写得很好
       const createObserver = (el, className) => {
         if (!el) return;
         const observer = new IntersectionObserver((entries, obs) => {
