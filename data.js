@@ -31,11 +31,12 @@ window.AppData = {
   tutorials: [
     {
       id: 1,
-      title: "tutorial Paper on β-cell Modeling",
+      title: "Biological data compression",
       icon: "📊",
       description:
-        "GraphMM reveals how Ca²⁺ channel variations impact Type 2 diabetes onset.",
-      time: "Published: May 2025",
+        "The 200GB of biological data(WFM, SIM, SXT, Cryo-ET) to be analyzed was compressed to 2GB with virtually no data loss.",
+      image: "img/data-compression.png",
+      isHorizontal: true,
     },
     {
       id: 2,
