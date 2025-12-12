@@ -75,14 +75,14 @@ createApp({
       return null;
     });
 
-    const handleNavigation = (viewName, selector) => {
+    const handleNavigation = (viewName, selector, behavior = "smooth") => {
       currentView.value = viewName;
       isMobileMenuOpen.value = false;
 
       if (selector) {
         nextTick(() => {
           const el = document.querySelector(selector);
-          if (el) el.scrollIntoView({ behavior: "smooth" });
+          if (el) el.scrollIntoView({ behavior: behavior });
         });
       } else {
         window.scrollTo({ top: 0, behavior: "auto" });
