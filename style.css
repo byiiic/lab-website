@@ -1,3 +1,30 @@
+:root {
+  --page-scale: 1;
+  --design-width: 1800px;
+}
+
+html,
+body {
+  margin: 0;
+  background: #f3f4f6;
+  overflow-x: hidden;
+}
+
+#app {
+  width: var(--design-width);
+  margin-left: auto;
+  margin-right: auto;
+  zoom: var(--page-scale);
+  transform-origin: top center;
+}
+
+@media (max-width: 1023px) {
+  #app {
+    width: 100%;
+    zoom: 1;
+  }
+}
+
 html {
   overflow-y: scroll;
 }
@@ -16,7 +43,6 @@ html {
 .slide-up-fade-in {
   animation: slide-up-fade-in 1.5s ease forwards;
 }
-
 
 @keyframes slide-left-fade-in {
   0% {

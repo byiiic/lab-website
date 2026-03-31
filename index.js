@@ -23,6 +23,19 @@ const InfoCard = {
     `,
 };
 
+const DESIGN_WIDTH = 1800;
+const MOBILE_BREAKPOINT = 960;
+
+const updatePageScale = () => {
+  const isPhoneLayout = window.innerWidth < MOBILE_BREAKPOINT;
+  const scale = isPhoneLayout
+    ? 1
+    : Math.min(window.innerWidth / DESIGN_WIDTH, 1);
+  document.documentElement.style.setProperty("--page-scale", scale);
+};
+
+window.addEventListener("resize", updatePageScale);
+
 createApp({
   components: {
     InfoCard,
@@ -36,11 +49,13 @@ createApp({
 
     const checkMobile = () => {
       const isUserAgentMobile = /Mobi|Android|iPhone|iPad/i.test(
-        navigator.userAgent
+        navigator.userAgent,
       );
-      const isPortraitRatio = window.innerWidth / window.innerHeight < 5 / 4;
-      return isUserAgentMobile || isPortraitRatio;
+      const isNarrowViewport = window.innerWidth < MOBILE_BREAKPOINT;
+
+      return isUserAgentMobile || isNarrowViewport;
     };
+
     window.addEventListener("resize", () => {
       isMobile.value = checkMobile();
     });
@@ -133,13 +148,15 @@ createApp({
       createObserver(resRef.value, "slide-left-fade-in");
       createObserver(newRef.value, "slide-right-fade-in");
 
-      if (isMobile) {
+      if (isMobile.value) {
         showPlayButton.value = true;
       } else if (videoRef.value) {
         videoRef.value
           .play()
           .catch((err) => console.warn("Autoplay blocked", err));
       }
+
+      updatePageScale();
     });
 
     return {
